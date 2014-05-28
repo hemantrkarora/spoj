@@ -1,0 +1,13 @@
+#include<stdio.h>
+main()
+{
+int p,q,s;
+scanf("%d %d",&p,&q);
+if((p==1 || p==0) && (q==1 || q==0))
+{
+s=(!p)*q + (!q)*p;
+printf("%d",s);
+}
+return 0;
+}
+ 
