@@ -1,0 +1,83 @@
+Given a natural number n (1 <= n <= 500000), please output the summation of all its proper divisors.
+
+Definition: A proper divisor of a natural number is the divisor that is strictly less than the number.
+
+e.g. number 20 has 5 proper divisors: 1, 2, 4, 5, 10, and the divisor summation is: 1 + 2 + 4 + 5 + 10 = 22.
+
+ 
+ Input
+
+ An integer stating the number of test cases (equal to about 200000), and that many lines follow, each containing one integer between 1 and 500000 inclusive.
+ Output
+
+ One integer each line: the divisor summation of the integer given respectively.
+ Example
+
+ Sample Input:
+ 3
+ 2
+ 10
+ 20
+
+ Sample Output:
+ 1
+ 8
+ 22
+
+
+=====================================
+
+SELF - NOTE :
+This problem seems to be one of the easiest , but the catch lies in the time constraint :
+if number of test cases =200000
+and range of numbers is 500000 , it takes around 20 seconds by bruteforce algorithm but the time limit is 3 seconds only .
+Hence we make use of prime factors .
+
+ 	
+
+	Let's suppose you have a way to compute primes relatively quickly. This could be a one time upfront activity, bounded by the square root of the largest input value. In this case, you already know the bound of the largest input value (500000), so you can simply hard code a table of primes into the program.
+
+	static unsigned P[] = {
+	2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71,
+	73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151,
+	157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229, 233,
+	239, 241, 251, 257, 263, 269, 271, 277, 281, 283, 293, 307, 311, 313, 317,
+	331, 337, 347, 349, 353, 359, 367, 373, 379, 383, 389, 397, 401, 409, 419,
+	421, 431, 433, 439, 443, 449, 457, 461, 463, 467, 479, 487, 491, 499, 503,
+	509, 521, 523, 541, 547, 557, 563, 569, 571, 577, 587, 593, 599, 601, 607,
+	613, 617, 619, 631, 641, 643, 647, 653, 659, 661, 673, 677, 683, 691, 701
+	};
+
+	static int P_COUNT = sizeof(P)/sizeof(*P);
+
+	Now, from the primes, for each input value, you can:
+
+	*  Compute the prime factorization
+	*  Compute the product of the sums of the powers of each prime factor.
+
+This will result in the sum of the divisors. Subtract the input value from the sum to obtain the sum of proper divisors. These two steps can be combined into a single loop.
+
+This algorithm works because multiplying polynomials naturally results in sums of all combinations of the polynomial terms multiplied together. In the case where each polynomial term consists of powers of primes that divide the input, the combinations of the terms multiplied together make up the divisors. The algorithm is fast, and should be able to process 500000 numbers in the interval [1, 500000] in less than a second on a Core i3 or better processor.
+
+		The following function implements the method described above.
+
+        unsigned compute (unsigned n) {
+		 unsigned sum = 1;
+	         unsigned x = n;
+		 for (int i = 0; i < P_COUNT; ++i) {
+			 if (P[i] > x / P[i]) break;    /* remaining primes won't divide x */
+			 if (x % P[i] == 0) {           /* P[i] is a divisor of n */
+				unsigned sub = P[i] + 1;   /* add in power of P[i] */
+				x /= P[i];                 /* reduce x by P[i] */
+				while (x % P[i] == 0) {    /* while P[i] still divides x */
+				      x /= P[i];             /* reduce x */
+				      sub = sub * P[i] + 1;  /* add by another power of P[i] */
+				}
+				sum *= sub;                /* product of sums */
+			}
+	        }
+		if (x > 1) sum *= x + 1;           /* if x > 1, then x is prime */
+                return sum - n;
+        }
+
+source : http://stackoverflow.com/questions/18836303/summation-of-all-proper-divisors/18885126#18885126
