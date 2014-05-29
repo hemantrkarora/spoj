@@ -1,3 +1,5 @@
+/*Read DIVSUM.txt and DVSUM.pdf for problem statement and logic*/
+
 #include<stdio.h>
 
 static unsigned P[] = {
