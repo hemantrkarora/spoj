@@ -93,3 +93,19 @@ Summary:
     git add . stages new and modified, without deleted
     git add -u stages modified and deleted, without new
 
+note : if error on push 
+
+To https://github.com/hemantrkarora/spoj.git !  [rejected]        master ->
+master (non-fast-forward) error: failed to push some refs to
+'https://github.com/hemantrkarora/spoj.git' To prevent you from losing history,
+non-fast-forward updates were rejected Merge the remote changes (e.g. 'git
+pull') before pushing again.  See the 'Note about fast-forwards' section of
+'git push --help' for details.
+
+solution is : 
+
+git pull --rebase 
+
+git push
+
+
