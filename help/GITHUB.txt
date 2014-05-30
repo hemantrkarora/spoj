@@ -1,0 +1,95 @@
+GITHUB
+1.INITIALIZING 
+git init
+2.CHECK STATUS
+git status
+3.ADD UNTRACKED FILE
+git add <filename> (eg.git add octocat.txt)
+(eg2.git add octofamily/octodog.txt)
+
+ADDING MULTIPLE FILES USING WILDCARD(DON'T FORGET THE SINGLE QUOTES - THIS ADDS "ALL" FILES IN THE WHOLE DIR INCLUDING SUBDIRECTORIES and NOT JUST IN THE CURRENT DIR)
+git add '*.txt'
+
+4.COMMIT(STORING CHANGES IN STAGED AREA TO REPO WITH A MESSAGE)
+git commit -m <message> (git commit -m "Add cute octocat story")
+
+5.HISTORY
+git log
+(git log --summary FOR DETAILED HISTORY)
+
+6.LOCAL REPO TO GITHUB SERVER
+git remote add <remote name> <repo url> (typically main remote must be named "origin" EXAMPLE : git remote add origin https://github.com/try-git/try_git.git)
+
+7.PUSING REMOTELY(pushing local changes to our "origin" repo on GitHub to tell Git to put our commits)
+git push -u origin master
+(The name of our remote is origin and the default local branch name is master. The -u tells Git to remember the parameters, so that next time we can simply run git push and Git will know what to do)
+note:customizing git-git hooks at http://git-scm.com/book/en/Customizing-Git-Git-Hooks
+
+8.PULLING REMOTELY (TO CHECK GIT REPO CHANGES AND PULL DOWN NEW CHANGES)
+git pull origin master
+NOTE:to not commit all the changes ,we stash them
+git stash //stash changes
+git stash apply //re=apply changes after pull
+
+9.DIFFERENCES
+git diff
+(git diff HEAD //diff of "most recent" commit)
+git diff --staged //to see changes u just staged
+
+10.RESETTING THE STAGE
+git reset octofamily/octodog.txt //unstages the file
+
+11.UNDO 
+git checkout --<target> //octodog has been unstaged but still present in file dir;to revert files to last commit do this
+(eg. git checkout -- octocat.txt)
+
+12.BRANCHING OUT
+git branch clean_up//clean_up is our new branch
+git branch//to see all branches 
+git checkout <branch> //switch to the branch
+
+NOTE:
+git checkout -b new_branch//to checkout and create a branch at the same time. This is the same thing as doing:
+
+git branch new_branch
+git checkout new_branch
+
+13.REMOVING THINGS
+git rm '*.txt' //will not only remove the actual files from disk, but will also stage the removal of the files for us.
+
+NOTE :git rm -r folder_of_cats//This will recursively remove all folders and files from the given directory.
+
+NOTE :
+If you happen to delete a file without using 'git rm' you'll find that you still have to 'git rm' the deleted files from the working tree. You can save this step by using the '-a' option on 'git commit', which auto removes deleted files with the commit.
+
+git commit -am "Delete stuff"
+
+14.COMMITING BRANCH CHANGES
+git commit -m "Remove all the cats"
+
+15.MERGING
+git checkout master//switch to master
+git merge clean_up//merge your changes from the clean_up branch into the master branch
+
+NOTE:Merge Conflicts can occur when changes are made to a file at the same time.You just need to decide which code to keep.
+
+16.DELETE BRANCH
+git branch -d <branch name>
+
+NOTE:-d won't let you delete something that hasn't been merged.You can either add the --force (-f) option or use -D which combines -d -f together into one command.
+
+17.PUSH
+git push
+
+18.
+"git add -A" is equivalent to 
+{
+ git add .;
+ git add -u.
+}
+Summary:
+
+    git add -A stages All
+    git add . stages new and modified, without deleted
+    git add -u stages modified and deleted, without new
+
