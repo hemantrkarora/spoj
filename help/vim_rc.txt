@@ -1,0 +1,7 @@
+Edit the ~/.vimrc VI editor init file as :
+
+au BufEnter *.txt setl tx ts=4 sw=4 fo+=n2a
+
+This above command will split a single long-line of .txt files opened in vim to
+multiple lines .  I have done this for good readability in Github where
+otherwise we had to use horizontal scrollbar .
