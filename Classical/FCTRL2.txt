@@ -1,0 +1,47 @@
+my rating=4/5
+
+24. Small factorials
+Problem code: FCTRL2
+
+ You are asked to calculate factorials of some small positive integers.
+ Input
+
+ An integer t, 1<=t<=100, denoting the number of testcases, followed by t 
+ lines, each containing a single integer n, 1<=n<=100.
+ Output
+
+ For each integer n given at input, display a line with the value of n!
+ Example
+ Sample input:
+
+ 4
+ 1
+ 2
+ 5
+ 3
+
+ Sample output:
+
+ 1
+ 2
+ 120
+ 6
+
+ Added by:	Adrian Kosowski
+ Date:	2004-05-28
+ Time limit:	1s
+ Source limit:	2000B
+ Memory limit:	256MB
+ Cluster: 	Pyramid (Intel Pentium III 733 MHz)
+ Languages:	All 
+
+ ------------------------------------
+
+ self-note :
+ In C language,even if you use unsigned long long int data type , you can get 
+ correct factorial only upto 20.Look at the answer as well as codechef pdf for 
+ an intelligent algo for overcoming this hurdle using primitive data types only 
+ .
+ Refer : 
+ http://discuss.codechef.com/questions/7349/computing-factorials-of-a-huge-number-in-cc-a-tutorial
+ http://www.codechef.com/problems/FCTRL2
