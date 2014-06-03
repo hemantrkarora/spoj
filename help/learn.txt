@@ -1,0 +1,65 @@
+
+1.getchar_unlocked
+2.realloc(ptr,size),valgrind
+3.Circular shift (bitwise):
+	y = (x << shift) | (x >> (sizeof(x)*CHAR_BIT - shift));
+
+CHAR_BIT is the number of bits per byte, should be 8 always.
+
+shift is the number of bits you want to shift left in a circular fashion
+
+Suppose that x is 8 bits.
+
++----+----+----+----+----+----+----+----+
+| x1   x2   x3   x4   x5   x6   x7   x8 |
++----+----+----+----+----+----+----+----+
+
+Then, shifting it left by 3 gives us:
+
++----+----+----+----+----+----+----+----+
+| x4   x5   x6   x7   x8    0    0    0 |
++----+----+----+----+----+----+----+----+
+
+Now, CHAR_BIT*sizeof(x) is the same as the width of x in bits, 8. So shifting x 
+to the right by 8 - 3 gives us:
+
++----+----+----+----+----+----+----+----+
+| 0    0    0    0    0    x1   x2   x3 |
++----+----+----+----+----+----+----+----+
+
+And taking the OR you get:
+
++----+----+----+----+----+----+----+----+
+| x4   x5   x6   x7   x8   x1   x2   x3 |
++----+----+----+----+----+----+----+----+
+
+This is technically non-portable because it is non-portable to shift by an 
+amount equal to the width of the type -- so if shift is 8, then the left shift 
+is wrong, and if the shift is 0, then the right shift is wrong. However, this 
+works in practice on all three common behaviors when shifting by the type 
+width. (In practice, the shift amount is reduced by some modulo -- either the 
+bit width of the type or some larger number.)
+
+
+4.Swap nibbles :
+	y = ( (x & 0x0F) << 4 | (x & 0xF0 ) >> 4 )
+
+	Say x is 100
+	i.e. x is 0110 0100		, 0110 0100
+			& 0000 1111		, 1111 0000
+			-----------		,-----------
+			  0000 0100		  0110 0000
+			-----------		 -----------
+
+			<< 4 gives        >>4 gives
+			0100 0000			0000 0110
+
+			0100 0000
+		OR  0000 0110
+		--------------
+			0100 0110 = 70
+		--------------
+	
+	Ans is 70.
+
+
